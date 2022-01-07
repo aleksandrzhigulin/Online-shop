@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" th:href="@{/styles/style.css}">
+</head>
+<body>
+<p th:text="${title}"></p>
+<h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+<form th:action="@{/logout}" method="post">
+  <input type="submit" value="Sign Out"/>
+</form>
+<div class="product_list">
+  <div class="product" th:each="product : ${products}">
+    <p th:text="${product.id}"></p>
+    <p th:text="${product.name}">Name: </p>
+    <p th:text="${product.description}">Description: </p>
+    <p th:text="${product.price}">Price:</p>
+    <a th:href="'/products/' + ${product.id}">See detail</a>
+  </div>
+</div>
+</body>
+</html>

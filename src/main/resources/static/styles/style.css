@@ -1,0 +1,11 @@
+.product {
+    display: flex;
+    flex-direction: column;
+    background: darkgray;
+    margin: 15px;
+    padding: 5px;
+    align-items: center;
+}
+.product_list {
+    display: flex;
+}
