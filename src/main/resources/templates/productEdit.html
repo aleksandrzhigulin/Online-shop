@@ -12,6 +12,7 @@
     <input type="text" th:value="${product.name}" name="name" id="name" placeholder="Name">
     <textarea name="description" th:text="${product.description}" id="desc"
               placeholder="Description"/>
+    <input type="hidden" name="_csrf" th:value="${_csrf.token}">
     <button type="submit">Done</button>
   </form>
 </div>

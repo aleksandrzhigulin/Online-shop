@@ -10,6 +10,7 @@
   <input type="text" name="price" id="price" placeholder="Price">
   <input type="text" name="name" id="name" placeholder="Name">
   <textarea name="description" id="desc" placeholder="Description"></textarea>
+  <input type="hidden" name="_csrf" th:value="${_csrf.token}">
   <button type="submit">Add Product</button>
 </form>
 </body>
