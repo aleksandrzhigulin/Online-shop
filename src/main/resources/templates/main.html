@@ -7,7 +7,7 @@
 </head>
 <body>
 <p th:text="${title}"></p>
-<h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+<h1 th:text="'Hello ' + ${#authentication.getPrincipal().getUsername()}"></h1>
 <form th:action="@{/logout}" method="post">
   <input type="submit" value="Sign Out"/>
 </form>

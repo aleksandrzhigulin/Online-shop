@@ -3,21 +3,23 @@ package com.example.store.Controllers;
 import com.example.store.Models.Role;
 import com.example.store.Models.User;
 import com.example.store.Repositories.UserRepository;
+import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @PreAuthorize("hasAuthority('ADMIN')")
@@ -25,6 +27,9 @@ public class UserController {
 
   @Autowired
   private UserRepository userRepository;
+
+  @Value("${upload.path}")
+  private String uploadPath;
 
   @GetMapping("/user")
   public String userList(Model model) {
@@ -35,6 +40,7 @@ public class UserController {
 
   @GetMapping("/user/{user}")
   public String userEditForm(@PathVariable User user, Model model) {
+
     model.addAttribute("user", user);
     model.addAttribute("roles", Role.values());
     return "userEdit";
@@ -42,8 +48,25 @@ public class UserController {
 
   @PostMapping("/user")
   public String userSave(@RequestParam("id") User user, @RequestParam String username,
-      @RequestParam Map<String, String> form) {
-    System.out.println(form);
+      @RequestParam Map<String, String> form, @RequestParam("file")
+      MultipartFile file) throws IOException {
+
+      if (file != null && !file.getOriginalFilename().isEmpty()) {
+      File uploadDir = new File(uploadPath);
+
+      if (!uploadDir.exists()) {
+        uploadDir.mkdir();
+      }
+
+      // Generate unique name to file
+      String fileUUID = UUID.randomUUID().toString();
+      String filename = fileUUID + '.' + file.getOriginalFilename();
+
+      file.transferTo(new File(uploadPath + "/" + filename));
+
+      user.setAvatarFileName(filename);
+    }
+
     Set<String> roles = Arrays.stream(Role.values())
         .map(Role::name)
         .collect(Collectors.toSet());
@@ -58,5 +81,11 @@ public class UserController {
     user.setUsername(username);
     userRepository.save(user);
     return "redirect:/user";
+  }
+
+  @PostMapping("/user/delete/{id}")
+  public String deleteUserById(@PathVariable("id") User user) {
+    userRepository.delete(user);
+    return "redirect:/home";
   }
 }

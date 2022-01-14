@@ -12,7 +12,6 @@
     <p th:text="${product.name}">Name: </p>
     <p th:text="${product.description}">Description: </p>
     <p th:text="${product.price}">Price:</p>
-
     <form th:action="'/products/' + ${product.id} + '/delete'" method="post">
       <button type="submit">Delete</button>
     </form>

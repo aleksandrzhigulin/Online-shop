@@ -6,7 +6,7 @@
 </head>
 <body>
 <p>User editor</p>
-<form method="post" action="/user">
+<form method="post" action="/user" enctype="multipart/form-data">
   <input type="text" th:value="${user.username}" name="username" placeholder="Username">
   <input type="hidden" th:value="${user.id}" name="id">
 
@@ -16,13 +16,9 @@
     <input type="checkbox" th:checked="${#lists.contains(user.roles, role)}" th:name="${role}">
   </div>
 
-  <!--<div class="" th:each="role : ${roles}">
-    <div class="" th:each="user_role : ${user.roles}">
-      <input type="checkbox" th:name="${role}" th:text="${role}" th:value="checked"
-             th:checked="${user_role} == ${role}">
-    </div> -->
-
   </div>
+
+  <input type="file" name="file">
   <input type="hidden" name="_csrf" th:value="${_csrf.token}">
 
   <button type="submit">Save</button>

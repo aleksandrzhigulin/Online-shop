@@ -4,6 +4,7 @@ import com.example.store.Models.Product;
 import com.example.store.Models.User;
 import com.example.store.Repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +22,9 @@ public class MainController {
 
   @Autowired
   private ProductRepository productRepository;
+
+  @Value("${upload.path}")
+  private String uploadPath;
 
   @GetMapping("/home")
   public String home(Model model) {
@@ -86,6 +90,7 @@ public class MainController {
     productRepository.save(product);
     return "redirect:/products/{id}";
   }
+
 
   @PostMapping("/products/{id}/delete")
   public String productPostDelete(@PathVariable("id") long productId, Model model) {
