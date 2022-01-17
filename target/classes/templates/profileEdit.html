@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Profile</title>
+</head>
+<body>
+<p>User editor</p>
+<form method="post" action="/profile/edit" enctype="multipart/form-data">
+  <input type="text" th:value="${user.username}" name="username" placeholder="Username">
+  <span>Avatar:</span><input type="file" name="file">
+  <input type="hidden" id="test" th:value="${user.id}" name="id">
+  <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+
+  <button type="submit">Save</button>
+</form>
+</body>
+</html>

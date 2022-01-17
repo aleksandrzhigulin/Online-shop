@@ -3,6 +3,7 @@ package com.example.store.Controllers;
 import com.example.store.Models.Role;
 import com.example.store.Models.User;
 import com.example.store.Repositories.UserRepository;
+import com.example.store.Services.UserService;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -31,6 +32,9 @@ public class UserController {
   @Value("${upload.path}")
   private String uploadPath;
 
+  @Autowired
+  private UserService userService;
+
   @GetMapping("/user")
   public String userList(Model model) {
     Iterable<User> users = userRepository.findAll();
@@ -51,7 +55,7 @@ public class UserController {
       @RequestParam Map<String, String> form, @RequestParam("file")
       MultipartFile file) throws IOException {
 
-      if (file != null && !file.getOriginalFilename().isEmpty()) {
+    if (file != null && !file.getOriginalFilename().isEmpty()) {
       File uploadDir = new File(uploadPath);
 
       if (!uploadDir.exists()) {
@@ -86,6 +90,45 @@ public class UserController {
   @PostMapping("/user/delete/{id}")
   public String deleteUserById(@PathVariable("id") User user) {
     userRepository.delete(user);
-    return "redirect:/home";
+    return "redirect:/user";
   }
+
+  @PreAuthorize("isAuthenticated()")
+  @GetMapping("/profile/edit")
+  public String editProfile(Model model) {
+    User user = userService.getAuthorizedUser();
+    System.out.println(user);
+    model.addAttribute("user", user);
+    return "profileEdit";
+  }
+
+  @PreAuthorize("isAuthenticated()")
+  @PostMapping("/profile/edit")
+  public String editPostProfile(Model model, @RequestParam String username,
+      @RequestParam("id") Long id, @RequestParam("file") MultipartFile file) throws IOException {
+    User user = userRepository.findById(id).orElseThrow();
+    user.setUsername(username);
+
+    if (file != null && !file.getOriginalFilename().isEmpty()) {
+      File uploadDir = new File(uploadPath);
+
+      if (!uploadDir.exists()) {
+        uploadDir.mkdir();
+      }
+
+      // Generate unique name to file
+      String fileUUID = UUID.randomUUID().toString();
+      String filename = fileUUID + '.' + file.getOriginalFilename();
+
+      file.transferTo(new File(uploadPath + "/" + filename));
+
+      user.setAvatarFileName(filename);
+    }
+
+    userRepository.save(user);
+
+    return "redirect:/login?logout";
+
+    }
+
 }

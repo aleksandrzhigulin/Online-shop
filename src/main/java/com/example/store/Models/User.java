@@ -16,9 +16,12 @@ public class User implements UserDetails {
   private Long id;
   private String username;
   private String password;
-  private String avatarFileName = "default_profile_avatar" + ".png";
+  private String avatarFileName = "default/" + "default_profile_avatar" + ".png";
 
   public String getAvatarFileName() {
+    if (this.avatarFileName == null) {
+      this.avatarFileName = "default/" + "default_profile_avatar" + ".png";
+    }
     return avatarFileName;
   }
 

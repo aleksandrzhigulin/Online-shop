@@ -1,24 +1,33 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Title</title>
+  <title>Home</title>
   <link rel="stylesheet" th:href="@{/styles/style.css}">
+
+  <div class="" th:insert="/components/leftsidebar :: link"></div>
+  <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap-grid.min.css" />
 </head>
 <body>
-<p th:text="${title}"></p>
-<h1 th:text="'Hello ' + ${#authentication.getPrincipal().getUsername()}"></h1>
-<form th:action="@{/logout}" method="post">
-  <input type="submit" value="Sign Out"/>
-</form>
-<div class="product_list">
-  <div class="product" th:each="product : ${products}">
-    <p th:text="${product.id}"></p>
-    <p th:text="${product.name}">Name: </p>
-    <p th:text="${product.description}">Description: </p>
-    <p th:text="${product.price}">Price:</p>
-    <a th:href="'/products/' + ${product.id}">See detail</a>
+    <div class="" th:insert="/components/leftsidebar :: nav"></div>
+  <div class="container">
+    <h1 th:text="'Hello ' + ${#authentication.getPrincipal().getUsername()}" style="color: var(--text-color);"></h1>
+    <div class="" sec:authorize="isAuthenticated()"><a href="/profile/edit">Edit Profile</a></div>
+    <form th:action="@{/logout}" method="post">
+      <input type="submit" value="Sign Out"/>
+    </form>
+    <div class="product_list">
+      <div class="product" th:each="product : ${products}">
+        <p th:text="${product.id}"></p>
+        <p th:text="${product.name}">Name: </p>
+        <p th:text="${product.description}">Description: </p>
+        <p th:text="${product.price}">Price:</p>
+        <a th:href="'/products/' + ${product.id}">See detail</a>
+      </div>
+    </div>
   </div>
-</div>
+<div class="" th:insert="/components/leftsidebar :: script"></div>
 </body>
 </html>
