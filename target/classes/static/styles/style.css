@@ -1,11 +1,18 @@
 .product {
     display: flex;
     flex-direction: column;
-    background: darkgray;
-    margin: 15px;
+    background: var(--sidebar-color);
+    border-radius: 6%;
     padding: 5px;
     align-items: center;
+    height: 360px
+}
+.product img {
+  max-width: 250px;
+  margin-bottom: 30px;
+  padding: 10px;
 }
 .product_list {
     display: flex;
+    margin-top: 50px;
 }

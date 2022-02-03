@@ -11,7 +11,7 @@
   <span>Avatar:</span><input type="file" name="file">
   <input type="hidden" id="test" th:value="${user.id}" name="id">
   <input type="hidden" name="_csrf" th:value="${_csrf.token}">
-
+  <p th:text="'Password = ' + ${user.password}"></p>
   <button type="submit">Save</button>
 </form>
 </body>

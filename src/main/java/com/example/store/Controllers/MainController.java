@@ -3,6 +3,10 @@ package com.example.store.Controllers;
 import com.example.store.Models.Product;
 import com.example.store.Models.User;
 import com.example.store.Repositories.ProductRepository;
+import com.example.store.Services.UserService;
+import java.io.File;
+import java.io.IOException;
+import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,12 +20,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class MainController {
 
   @Autowired
   private ProductRepository productRepository;
+
+  @Autowired
+  private UserService userService;
 
   @Value("${upload.path}")
   private String uploadPath;
@@ -30,6 +38,7 @@ public class MainController {
   public String home(Model model) {
     model.addAttribute("title", "Main Page");
     // Get all products
+    System.out.println(userService.getAuthorizedUser().getRoles());
     Iterable<Product> products = productRepository.findAll();
     model.addAttribute("products", products);
     return "main";
@@ -44,8 +53,27 @@ public class MainController {
   // Название параметра из атрибута name
   public String productPostAdd(@RequestParam String name, @RequestParam Integer price,
       @RequestParam String description, Model model,
-      @AuthenticationPrincipal User user) {
+      @AuthenticationPrincipal User user, @RequestParam("file") MultipartFile file)
+      throws IOException {
+
     Product product = new Product(name, description, price);
+
+    if (file != null && !file.getOriginalFilename().isEmpty()) {
+      File uploadDir = new File(uploadPath);
+
+      if (!uploadDir.exists()) {
+        uploadDir.mkdir();
+      }
+
+      // Generate unique name to file
+      String fileUUID = UUID.randomUUID().toString();
+      String filename = fileUUID + '.' + file.getOriginalFilename();
+
+      file.transferTo(new File(uploadPath + "/" + filename));
+
+      product.setImageFileName(filename);
+    }
+
     productRepository.save(product);
     return "redirect:/home";
   }

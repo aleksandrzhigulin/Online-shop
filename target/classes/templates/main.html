@@ -13,14 +13,14 @@
 <body>
     <div class="" th:insert="/components/leftsidebar :: nav"></div>
   <div class="container">
-    <h1 th:text="'Hello ' + ${#authentication.getPrincipal().getUsername()}" style="color: var(--text-color);"></h1>
+    <h1 th:text="'Hello ' + ${#authentication.getPrincipal().getUsername()}" style="color: var(--text-color);" sec:authorize="isAuthenticated()"></h1>
     <div class="" sec:authorize="isAuthenticated()"><a href="/profile/edit">Edit Profile</a></div>
     <form th:action="@{/logout}" method="post">
       <input type="submit" value="Sign Out"/>
     </form>
     <div class="product_list">
       <div class="product" th:each="product : ${products}">
-        <p th:text="${product.id}"></p>
+        <img th:src="'/images/' + ${product.getImageFileName()}"  alt="Product Image">
         <p th:text="${product.name}">Name: </p>
         <p th:text="${product.description}">Description: </p>
         <p th:text="${product.price}">Price:</p>

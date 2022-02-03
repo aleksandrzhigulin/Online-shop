@@ -6,10 +6,11 @@
 </head>
 <body>
 <p>Hello</p>
-<form action="/products/add" method="post">
+<form action="/products/add" method="post" enctype="multipart/form-data">
   <input type="text" name="price" id="price" placeholder="Price">
   <input type="text" name="name" id="name" placeholder="Name">
   <textarea name="description" id="desc" placeholder="Description"></textarea>
+  <input type="file" name="file">
   <input type="hidden" name="_csrf" th:value="${_csrf.token}">
   <button type="submit">Add Product</button>
 </form>
