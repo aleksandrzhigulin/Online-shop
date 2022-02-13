@@ -7,9 +7,16 @@
 <body>
     <div class="products">
         <div class="product" style="border: 2px solid black; margin: 10px; padding: 10px;" th:each="item : ${cart}">
+
             <p th:text="${item.key.name}"></p>
+
             <p th:text="${item.key.description}"></p>
+
+            <p th:text="'Цена ' + ${item.key.price}"></p>
+            <p th:text="'Кол-во: ' + ${item.value}"></p>
         </div>
+
+        <p th:text="'Итоговая цена:' + ${totalPrice}"></p>
     </div>
 </body>
 </html>

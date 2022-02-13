@@ -46,8 +46,8 @@ public class MainRestController {
 
 
         // Check if this item is already exists in the user's cart
-        if (userCart.containsKey(productId)) {
-            int amount = userCart.get(productId);
+        if (userCart.containsKey(product)) {
+            int amount = userCart.get(product);
             amount++;
             userCart.put(product, amount);
         }

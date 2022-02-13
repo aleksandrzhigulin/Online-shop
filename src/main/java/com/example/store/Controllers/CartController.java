@@ -28,6 +28,7 @@ public class CartController {
         Cart cart = cartRepository.findById(authorized_user.getId()).orElseThrow();
         Map<Product, Integer> userCart = cart.getCart();
 
+        model.addAttribute("totalPrice", cart.getSumOfAllItems());
         model.addAttribute("cart", userCart);
         return "cart";
     }

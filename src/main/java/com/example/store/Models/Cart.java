@@ -43,4 +43,12 @@ public class Cart {
     public void setCart(Map<Product, Integer> cart) {
         Cart = cart;
     }
+
+    public int getSumOfAllItems() {
+        int sum = 0;
+        for (Map.Entry<Product, Integer> products : Cart.entrySet()) {
+            sum += products.getKey().getPrice() * products.getValue();
+        }
+        return sum;
+    }
 }
