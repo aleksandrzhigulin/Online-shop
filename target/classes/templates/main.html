@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org"
+      xmlns:X-Content-Type-Options="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8">
   <title>Home</title>
@@ -9,6 +10,7 @@
   <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap-grid.min.css" />
+  <link rel="script" th:href="@{/scripts/index.js}">
 </head>
 <body>
     <div class="" th:insert="/components/leftsidebar :: nav"></div>
@@ -18,16 +20,22 @@
     <form th:action="@{/logout}" method="post">
       <input type="submit" value="Sign Out"/>
     </form>
+    <button onclick="getRequestHello()">Send GET Request</button>
     <div class="product_list">
-      <div class="product" th:each="product : ${products}">
+      <div class="product" th:each="product : ${products}" >
         <img th:src="'/images/' + ${product.getImageFileName()}"  alt="Product Image">
         <p th:text="${product.name}">Name: </p>
         <p th:text="${product.description}">Description: </p>
         <p th:text="${product.price}">Price:</p>
         <a th:href="'/products/' + ${product.id}">See detail</a>
+        <button onclick="addProductToCart(this.id)" th:id="${product.id}">Add to cart</button>
       </div>
     </div>
   </div>
 <div class="" th:insert="/components/leftsidebar :: script"></div>
+
+
+    <script type="text/javascript" th:src="@{/js/index.js}"></script>
+
 </body>
 </html>

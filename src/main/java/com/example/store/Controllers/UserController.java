@@ -2,6 +2,7 @@ package com.example.store.Controllers;
 
 import com.example.store.Models.Role;
 import com.example.store.Models.User;
+import com.example.store.Repositories.CartRepository;
 import com.example.store.Repositories.UserRepository;
 import com.example.store.Services.UserService;
 import java.io.File;
@@ -28,6 +29,9 @@ public class UserController {
 
   @Autowired
   private UserRepository userRepository;
+
+  @Autowired
+  private CartRepository cartRepository;
 
   @Value("${upload.path}")
   private String uploadPath;
@@ -89,6 +93,8 @@ public class UserController {
 
   @PostMapping("/user/delete/{id}")
   public String deleteUserById(@PathVariable("id") User user) {
+
+    cartRepository.deleteById(user.getId());
     userRepository.delete(user);
     return "redirect:/user";
   }

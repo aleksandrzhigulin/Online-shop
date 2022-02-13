@@ -2,6 +2,7 @@ package com.example.store.Controllers;
 
 import com.example.store.Models.Product;
 import com.example.store.Models.User;
+import com.example.store.Repositories.CartRepository;
 import com.example.store.Repositories.ProductRepository;
 import com.example.store.Services.UserService;
 import java.io.File;
@@ -31,6 +32,9 @@ public class MainController {
   @Autowired
   private UserService userService;
 
+  @Autowired
+  private CartRepository cartRepository;
+
   @Value("${upload.path}")
   private String uploadPath;
 
@@ -41,6 +45,8 @@ public class MainController {
     System.out.println(userService.getAuthorizedUser().getRoles());
     Iterable<Product> products = productRepository.findAll();
     model.addAttribute("products", products);
+
+    System.out.println("All carts: " + cartRepository.findAll());
     return "main";
   }
 
