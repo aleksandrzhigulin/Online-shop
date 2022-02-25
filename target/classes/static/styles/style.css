@@ -1,18 +1,11 @@
-.product {
-    display: flex;
-    flex-direction: column;
-    background: var(--sidebar-color);
-    border-radius: 6%;
-    padding: 5px;
-    align-items: center;
-    height: 360px
-}
-.product img {
-  max-width: 250px;
-  margin-bottom: 30px;
-  padding: 10px;
-}
+
 .product_list {
     display: flex;
     margin-top: 50px;
+}
+.product_list .card {
+    margin: 10px;
+}
+.card img {
+    height: 250px;
 }

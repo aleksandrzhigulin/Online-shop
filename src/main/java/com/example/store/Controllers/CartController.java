@@ -25,6 +25,14 @@ public class CartController {
     @GetMapping("/cart")
     public String getItemsInCart(Model model) {
         User authorized_user = userService.getAuthorizedUser();
+        try {
+            Cart cart = cartRepository.findById(authorized_user.getId()).orElseThrow();
+        } catch (Exception e) {
+            Cart cart = new Cart();
+            cart.setId(authorized_user.getId());
+            cart.setUser(authorized_user);
+            cartRepository.save(cart);
+        }
         Cart cart = cartRepository.findById(authorized_user.getId()).orElseThrow();
         Map<Product, Integer> userCart = cart.getCart();
 

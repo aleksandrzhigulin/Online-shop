@@ -1,5 +1,8 @@
 package com.example.store.Models;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import java.util.LinkedHashMap;
 import java.util.Map;

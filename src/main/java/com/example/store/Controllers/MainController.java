@@ -1,13 +1,16 @@
 package com.example.store.Controllers;
 
+import com.example.store.Models.Cart;
 import com.example.store.Models.Product;
 import com.example.store.Models.User;
 import com.example.store.Repositories.CartRepository;
 import com.example.store.Repositories.ProductRepository;
+import com.example.store.Repositories.UserRepository;
 import com.example.store.Services.UserService;
 import java.io.File;
 import java.io.IOException;
-import java.util.UUID;
+import java.util.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,9 +22,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
@@ -32,6 +32,9 @@ public class MainController {
 
   @Autowired
   private UserService userService;
+
+  @Autowired
+  private UserRepository userRepository;
 
   @Autowired
   private CartRepository cartRepository;
@@ -129,10 +132,16 @@ public class MainController {
 
 
   @PostMapping("/products/{id}/delete")
-  public String productPostDelete(@PathVariable("id") long productId, Model model) {
+  public String productPostDelete(@PathVariable("id") long productId) {
     Product product = productRepository.findById(productId).orElseThrow();
+    // Delete not existed product in all carts
+    Iterable<Cart> carts = cartRepository.findAll();
+    for (Cart cart : carts) {
+      Map<Product, Integer> userCart = cart.getCart();
+      userCart.remove(product);
+    }
     productRepository.delete(product);
-    return "redirect:/products/{id}";
+    return "redirect:/home";
   }
 
   @GetMapping("/")

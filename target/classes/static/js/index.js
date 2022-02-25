@@ -1,4 +1,4 @@
-    // Убавляем кол-во по клику
+    // Decrease
        $('.quantity_inner .bt_minus').click(function() {
        let $input = $(this).parent().find('.quantity');
        let $id = $(this).parent().data('product-id');
@@ -10,7 +10,7 @@
 
 
    });
-   // Прибавляем кол-во по клику
+   // Increase
    $('.quantity_inner .bt_plus').click(function() {
        let $input = $(this).parent().find('.quantity');
        let $id = $(this).parent().data('product-id');
@@ -19,9 +19,8 @@
        $input.val(parseInt(count));
 
         increaseProductInCart($id);
-       //document.getElementById("totalPrice").textContent = increaseProductInCart($id);
    });
-   // Убираем все лишнее и невозможное при изменении поля
+   // Delete all that isn't needed
    $('.quantity_inner .quantity').bind("change keyup input click", function() {
        if (this.value.match(/[^0-9]/g)) {
            this.value = this.value.replace(/[^0-9]/g, '');
