@@ -5,8 +5,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Set;
 
 @Entity
@@ -19,14 +17,6 @@ public class User implements UserDetails {
   private String username;
   private String password;
   private String avatarFileName;
-
-  public String getAvatarFileName() {
-    return avatarFileName;
-  }
-
-  public void setAvatarFileName(String avatarFileName) {
-    this.avatarFileName = avatarFileName;
-  }
 
   private boolean active;
 
@@ -101,4 +91,11 @@ public class User implements UserDetails {
     this.roles = roles;
   }
 
+  public String getAvatarFileName() {
+    return avatarFileName;
+  }
+
+  public void setAvatarFileName(String avatarFileName) {
+    this.avatarFileName = avatarFileName;
+  }
 }

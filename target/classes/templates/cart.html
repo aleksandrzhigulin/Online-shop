@@ -3,20 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <title>Cart</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
 </head>
 <body>
+    <div class="container">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Price for 1</th>
+                <th scope="col">Amount</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${cart}" th:attr="data-product-id=${item.key.id}">
+                <th scope="row">1</th>
+                <td th:text="${item.key.name}"></td>
+                <td th:text="${item.key.description}"></td>
+                <td th:text="${item.key.price}"></td>
+                <td>
+                    <div class="quantity_inner" th:attr="data-product-id=${item.key.id}">
+                        <button class="bt_minus">-</button>
+                        <input type="text" class="quantity" th:value="${item.value}" data-max-count="99">
+                        <button class="bt_plus">+</button>
+                    </div>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+
+        <p>Итоговая цена:</p><span id="totalPrice" th:text="${totalPrice}"></span>
+    </div>
+    <!--
     <div class="products">
-        <div class="product" style="border: 2px solid black; margin: 10px; padding: 10px;" th:each="item : ${cart}">
+        <div class="table">
 
-            <p th:text="${item.key.name}"></p>
+            <div class="layout-inline row th">
+                <div class="col col-pro">Product</div>
+                <div class="col col-price align-center ">
+                    Price
+                </div>
+                <div class="col col-qty align-center">QTY</div>
+                <div class="col">VAT</div>
+                <div class="col">Total</div>
+            </div>
+        <div class="product" style="padding: 10px;" th:each="item : ${cart}">
 
-            <p th:text="${item.key.description}"></p>
+                <div class="layout-inline row">
 
-            <p th:text="'Цена ' + ${item.key.price}"></p>
-            <p th:text="'Кол-во: ' + ${item.value}"></p>
+                    <div class="col col-pro layout-inline">
+                        <img src="http://static.ddmcdn.com/gif/10-kitten-cuteness-1.jpg" alt="kitten" />
+                        <p th:text="${item.key.name}"></p>
+                    </div>
+
+                    <div class="col col-price col-numeric align-center ">
+                        <p th:text="${item.key.price} + '₽'"></p>
+                    </div>
+
+                    <div class="col col-qty layout-inline">
+                        <a href="#" class="qty qty-minus">-</a>
+                        <input type="numeric" th:value="${item.value}" />
+                        <a href="#" class="qty qty-plus">+</a>
+                    </div>
+
+                    <div class="col col-vat col-numeric">
+                        <p>£2.95</p>
+                    </div>
+                    <div class="col col-total col-numeric">               <p> £182.95</p>
+                    </div>
+                </div>
+
         </div>
 
-        <p th:text="'Итоговая цена:' + ${totalPrice}"></p>
+
     </div>
+    </div> -->
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script th:src="@{/js/index.js}"></script>
 </body>
 </html>

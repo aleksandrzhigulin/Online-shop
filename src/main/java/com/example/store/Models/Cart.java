@@ -1,7 +1,5 @@
 package com.example.store.Models;
 
-import org.hibernate.annotations.Cascade;
-
 import javax.persistence.*;
 import java.util.LinkedHashMap;
 import java.util.Map;

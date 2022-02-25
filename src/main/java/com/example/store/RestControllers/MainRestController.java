@@ -9,6 +9,7 @@ import com.example.store.Repositories.ProductRepository;
 import com.example.store.Repositories.UserRepository;
 import com.example.store.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,5 +58,20 @@ public class MainRestController {
         cart.setCart(userCart);
         cartRepository.save(cart);
         return "ok";
+    }
+
+    @GetMapping("cart/increaseItem/{id}")
+    public int increaseAmount(@PathVariable("id") Long productId) {
+        User user = userService.getAuthorizedUser();
+        Product product = productRepository.findById(productId).orElseThrow();
+        Cart cart = cartRepository.findById(user.getId()).orElseThrow();
+        Map<Product, Integer> userCart = cart.getCart();
+        // Get current amount of item and then increase it
+        Integer amount = userCart.get(product) + 1;
+        userCart.put(product, amount);
+        cart.setCart(userCart);
+        cartRepository.save(cart);
+
+        return cart.getSumOfAllItems();
     }
 }
