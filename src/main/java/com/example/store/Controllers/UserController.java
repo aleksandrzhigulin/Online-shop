@@ -103,7 +103,6 @@ public class UserController {
   @GetMapping("/profile/edit")
   public String editProfile(Model model) {
     User user = userService.getAuthorizedUser();
-    System.out.println(user);
     model.addAttribute("user", user);
     return "profileEdit";
   }
@@ -135,6 +134,6 @@ public class UserController {
 
     return "redirect:/login?logout";
 
-    }
+  }
 
 }

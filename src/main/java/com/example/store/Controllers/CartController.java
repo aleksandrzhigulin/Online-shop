@@ -16,28 +16,28 @@ import java.util.Map;
 @Controller
 public class CartController {
 
-    @Autowired
-    private UserService userService;
+  @Autowired
+  private UserService userService;
 
-    @Autowired
-    private CartRepository cartRepository;
+  @Autowired
+  private CartRepository cartRepository;
 
-    @GetMapping("/cart")
-    public String getItemsInCart(Model model) {
-        User authorized_user = userService.getAuthorizedUser();
-        try {
-            Cart cart = cartRepository.findById(authorized_user.getId()).orElseThrow();
-        } catch (Exception e) {
-            Cart cart = new Cart();
-            cart.setId(authorized_user.getId());
-            cart.setUser(authorized_user);
-            cartRepository.save(cart);
-        }
-        Cart cart = cartRepository.findById(authorized_user.getId()).orElseThrow();
-        Map<Product, Integer> userCart = cart.getCart();
-
-        model.addAttribute("totalPrice", cart.getSumOfAllItems());
-        model.addAttribute("cart", userCart);
-        return "cart";
+  @GetMapping("/cart")
+  public String getItemsInCart(Model model) {
+    User authorized_user = userService.getAuthorizedUser();
+    try {
+      Cart cart = cartRepository.findById(authorized_user.getId()).orElseThrow();
+    } catch (Exception e) {
+      Cart cart = new Cart();
+      cart.setId(authorized_user.getId());
+      cart.setUser(authorized_user);
+      cartRepository.save(cart);
     }
+    Cart cart = cartRepository.findById(authorized_user.getId()).orElseThrow();
+    Map<Product, Integer> userCart = cart.getCart();
+
+    model.addAttribute("totalPrice", cart.getSumOfAllItems());
+    model.addAttribute("cart", userCart);
+    return "cart";
+  }
 }

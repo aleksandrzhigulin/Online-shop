@@ -1,8 +1,5 @@
 package com.example.store.Models;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -69,12 +66,12 @@ public class Product {
 
   @Override
   public boolean equals(Object o) {
-      if (this == o) {
-          return true;
-      }
-      if (o == null || getClass() != o.getClass()) {
-          return false;
-      }
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
     Product product = (Product) o;
     return getId().equals(product.getId()) && Objects.equals(getName(), product.getName())
         && Objects.equals(getDescription(), product.getDescription()) && Objects.equals(getPrice(),

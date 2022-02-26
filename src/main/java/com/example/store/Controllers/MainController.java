@@ -46,11 +46,8 @@ public class MainController {
   public String home(Model model) {
     model.addAttribute("title", "Main Page");
     // Get all products
-    System.out.println(userService.getAuthorizedUser().getRoles());
     Iterable<Product> products = productRepository.findAll();
     model.addAttribute("products", products);
-
-    System.out.println("All carts: " + cartRepository.findAll());
     return "main";
   }
 
@@ -86,7 +83,7 @@ public class MainController {
     }
 
     productRepository.save(product);
-    return "redirect:/home";
+    return "redirect:/";
   }
 
   @GetMapping("/products/{id}")
@@ -99,7 +96,7 @@ public class MainController {
       model.addAttribute("products", result);
       return "productDetail";
     } else {
-      return "redirect:/home";
+      return "redirect:/";
     }
   }
 
@@ -114,7 +111,7 @@ public class MainController {
       model.addAttribute("products", result);
       return "productEdit";
     } else {
-      return "redirect:/home";
+      return "redirect:/";
     }
   }
 
@@ -141,11 +138,15 @@ public class MainController {
       userCart.remove(product);
     }
     productRepository.delete(product);
-    return "redirect:/home";
+    return "redirect:/";
   }
 
   @GetMapping("/")
   public String root(Model model) {
+    model.addAttribute("title", "Main Page");
+    // Get all products
+    Iterable<Product> products = productRepository.findAll();
+    model.addAttribute("products", products);
     return "main";
   }
 }
