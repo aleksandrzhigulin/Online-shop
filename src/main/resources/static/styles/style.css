@@ -9,6 +9,13 @@
 .card img {
     height: 250px;
 }
-.menu-links {
-    padding-left: 0;
+
+.nav-link {
+    padding: 0!important;
+}
+ol {
+    padding: 0!important;
+}
+ul {
+    padding: 0!important;
 }

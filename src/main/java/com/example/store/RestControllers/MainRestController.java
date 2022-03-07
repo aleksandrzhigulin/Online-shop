@@ -70,4 +70,33 @@ public class MainRestController {
 
     return cart.getSumOfAllItems();
   }
+
+  @GetMapping("cart/decreaseItem/{id}")
+  public int decreaseAmount(@PathVariable("id") Product product) {
+    User user = userService.getAuthorizedUser();
+    Cart cart = cartRepository.findById(user.getId()).orElseThrow();
+    Map<Product, Integer> userCart = cart.getCart();
+    Integer amount = userCart.get(product);
+    if (userCart.get(product) > 1) {
+      --amount;
+    }
+    userCart.put(product, amount);
+    cart.setCart(userCart);
+    cartRepository.save(cart);
+
+    return cart.getSumOfAllItems();
+  }
+
+  @GetMapping("cart/removeItem/{id}")
+  public Integer removeItemFromCart(@PathVariable("id") Product product) {
+    User user = userService.getAuthorizedUser();
+    Cart cart = cartRepository.findById(user.getId()).orElseThrow();
+    Map<Product, Integer> userCart = cart.getCart();
+    userCart.remove(product);
+    cart.setCart(userCart);
+
+    cartRepository.save(cart);
+
+    return cart.getSumOfAllItems();
+  }
 }

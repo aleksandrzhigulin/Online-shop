@@ -3,7 +3,7 @@
 *{
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    box-sizing: border-box!important;
     font-family: 'Poppins', sans-serif;
 }
 
@@ -61,17 +61,17 @@ body.dark{
 
 /* ===== Reusable code - Here ===== */
 .sidebar li{
-    height: 50px;
-    list-style: none;
-    display: flex;
-    align-items: center;
-    margin-top: 10px;
+    height: 50px!important;
+    list-style: none!important;
+    display: flex!important;
+    align-items: center!important;
+    margin-top: 10px!important;
 }
 
 .sidebar header .image,
 .sidebar .icon{
-    min-width: 60px;
-    border-radius: 6px;
+    min-width: 60px!important;
+    border-radius: 6px!important;
 }
 
 .sidebar .icon{
@@ -102,12 +102,12 @@ body.dark{
 /* =========================== */
 
 .sidebar header{
-    position: relative;
+    position: relative!important;
 }
 
 .sidebar header .image-text{
-    display: flex;
-    align-items: center;
+    display: flex!important;
+    align-items: center!important;
 }
 .sidebar header .logo-text{
     display: flex;
@@ -211,11 +211,11 @@ body.dark .sidebar li a:hover .text{
 }
 
 .sidebar .menu-bar{
-    height: calc(100% - 55px);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    overflow-y: scroll;
+    height: calc(100% - 55px)!important;
+    display: flex!important;
+    flex-direction: column!important;
+    justify-content: space-between!important;
+    overflow-y: scroll!important;
 }
 .menu-bar::-webkit-scrollbar{
     display: none;
